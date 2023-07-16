@@ -1,0 +1,87 @@
+
+{% extends 'base.html' %}
+{% block content %}
+  <div class="container">
+    <div class="col-md-6 offset-md-3 mt-4">
+      <!-- <h2>News Article Search</h2> -->
+      <form id="search-news-form" class="form-inline">
+        <div class="form-group">
+          <label for="searchInput" class="sr-only">Search</label>
+          <input type="text" class="form-control" id="search-input" placeholder="Search News Articles">
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="search-results" style="display: none;">
+    <!-- The search results will be dynamically added here -->
+    <div class="mt-4">
+      <table class="table" >
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Author</th>
+            <th scope="col">Description</th>
+            <th scope="col">Link</th>
+            <th scope="col">Published At</th>
+          </tr>
+        </thead>
+        <tbody id="news_table_body">
+        </tbody>
+      </table>
+    </div>
+  </div>
+    
+
+  <!-- Include your JavaScript code for handling the search functionality -->
+  <!-- <script src="script.js"></script> -->
+
+  <script>
+  
+  function loadData() {   
+    const urlParams = new URLSearchParams(window.location.search);   
+    function convertDateTime(datetime_str) {
+      const datetime = new Date(datetime_str);
+      const dateString = datetime.toLocaleDateString();
+      const timeString = datetime.toLocaleTimeString();
+
+      return `${dateString} (${timeString})`;
+    }
+      // Get form data
+      $.ajaxSetup({
+            headers: {
+            "X-CSRFToken": "{{ csrf_token }}"
+            }
+          });
+          // Make an AJAX POST request
+          $.ajax({
+            url: `/news_article/news/${urlParams.get('search_id')}`,
+            type: "GET",
+            data: null,
+            contentType: "application/json",
+            success: function(response) {
+              // Handle the successful response
+              console.log("Response:", response);
+              let article_data = response.data;
+              $('#news_table_body').html(prepareArticleTableHtml(article_data));
+               
+              $('#search-results').show();
+        },
+        error: function(xhr, status, error) {
+          // Handle the error response
+          console.log("Error:", error);
+        }
+      });
+    }
+  
+  $(document).ready(function() {
+    // Handle form submission
+    loadData();
+  });
+  
+  
+  </script>
+
+{% endblock content %}

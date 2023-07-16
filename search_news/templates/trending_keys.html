@@ -1,0 +1,58 @@
+
+{% extends 'admin_base.html' %}
+{% block content %}
+<div class="container">
+  <div id="search-results">
+    <!-- The search results will be dynamically added here -->
+    <div class="mt-1">
+      <table class="table" >
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Keyword</th>
+            <th scope="col">Search Count</th>
+          </tr>
+        </thead>
+        <tbody id="news_table_body">
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    function loadData() {
+      // Get form data
+      $.ajaxSetup({
+            headers: {
+            "X-CSRFToken": "{{ csrf_token }}"
+            }
+          });
+          // Make an AJAX POST request
+          $.ajax({
+            url: "/news_article/admin/trend_keys/",
+            type: "GET",
+            data: null,
+            contentType: "application/json",
+            success: function(response) {
+              // Handle the successful response
+              let data = response.data;
+              $('#news_table_body').html(prepareTrendingKeyTableHtml(data));
+               
+              $('#search-results').show();
+        },
+        error: function(xhr, status, error) {
+          // Handle the error response
+          console.log("Error:", error);
+        }
+      });
+    }
+
+  $(document).ready(function() {
+    // Handle form submission
+    loadData();
+  });
+  </script>
+
+{% endblock content %}
