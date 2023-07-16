@@ -27,11 +27,11 @@ session operates in a virtual environment.
 Once `pip` has finished downloading the dependencies:
 Add the .env file in news_article and add below variables:
 
-EMAIL_HOST_USER=''
-EMAIL_HOST_PASSWORD=''
-DEFAULT_FROM_EMAIL=''
-NEWS_API_KEY=''
-KEYWORD_THRESHOLD=900
+EMAIL_HOST_USER=''.
+EMAIL_HOST_PASSWORD=''.
+DEFAULT_FROM_EMAIL=''.
+NEWS_API_KEY=''.
+KEYWORD_THRESHOLD=900.
 
 KEYWORD_THRESHOLD is to prevent user to search same keyword multiple times
 
