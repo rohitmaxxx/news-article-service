@@ -25,7 +25,7 @@ Note the `(env)` in front of the prompt. This indicates that this terminal
 session operates in a virtual environment.
 
 Once `pip` has finished downloading the dependencies:
-Add the .env file in news_article and add below variables:
+Add the .env file in news_article and add below variables. And NEWS_API_KEY value in mandatory:
 
 - EMAIL_HOST_USER=''
 - EMAIL_HOST_PASSWORD=''
