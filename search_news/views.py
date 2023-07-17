@@ -53,39 +53,112 @@ def getNewsData(q, user_id, filters, search_id=None, old_news=None, params_str="
 
 class homepageRenderView(View):
     def get(self, request):
+        """
+        Handle GET requests render page.
+
+        Args:
+        - request: The logged in user HTTP request object.
+
+        Returns:
+        - Render homepage page
+        """
         return render(request, 'index.html')
 
 
 class userTrendingKeyRenderView(View):
     def get(self, request):
+        """
+        Handle GET requests render page.
+
+        Args:
+        - request: The logged in user HTTP request object.
+
+        Returns:
+        - Render trending page
+        """
         return render(request, 'trending_keys.html')
 
 
 class profileRenderView(View):
     def get(self, request):
+        """
+        Handle GET requests render page.
+
+        Args:
+        - request: The logged in user HTTP request object.
+
+        Returns:
+        - Render profile page
+        """
         return render(request, 'profile.html', {'user': request.user})
     
 
 class adminRenderView(View):
     def get(self, request):
+        """
+        Handle GET requests render page.
+
+        Args:
+        - request: The logged in user HTTP request object.
+
+        Returns:
+        - Render admin page
+        """
         return render(request, 'admin.html')
 
 
 class historyRenderView(View):
     def get(self, request):
+        """
+        Handle GET requests render page.
+
+        Args:
+        - request: The logged in user HTTP request object.
+
+        Returns:
+        - Render keyword searched history page
+        """
         return render(request, 'history.html')
 
 
 class articlesRenderView(View):
     def get(self, request):
+        """
+        Handle GET requests render page.
+
+        Args:
+        - request: The logged in user HTTP request object.
+
+        Returns:
+        - Render article page
+        """
         return render(request, 'articles.html')
 
 
 class userLogin(View):
     def get(self, request):
+        """
+        Handle GET requests render page.
+
+        Args:
+        - request: The logged in user HTTP request object.
+
+        Returns:
+        - Render login page
+        """
         return render(request, 'login.html')
 
     def post(self, request):
+        """
+        Handle POST requests to login user.
+
+        Args:
+        - request: The HTTP request object.
+        - username
+        - password
+        Returns:
+        - Redirect to admin user dashboard if user is admin otherwise article page
+        """
         body = json.loads(request.body)
         username = body.get('username')
         password = body.get('password')
@@ -109,6 +182,21 @@ class userLogin(View):
 
 class userView(View):
     def get(self, request):
+        """
+        Handle GET requests to retrieve all created users except admin.
+
+        Args:
+        - request: The logged in user HTTP request object.
+
+        Returns:
+        - API response with serialized user data with following dictionary keys:
+            - user_id
+            - quota
+            - username
+            - email
+            - is_active
+            - created_at
+        """
         user_data = newsUser.objects.filter(is_superuser=False)
         serialized_data = []
         for data in user_data:
@@ -125,6 +213,18 @@ class userView(View):
         return apiResponse(serialized_data)
     
     def post(self, request):
+        """
+        Handle POST requests to add new user.
+
+        Args:
+        - request: The HTTP request object.
+        - username
+        - quota
+        - email
+        - password
+        Returns:
+        - Redirect to admin user dashboard
+        """
         body = request.POST
         username = body['username'].strip()
         quota = body['quota'].strip()
@@ -170,7 +270,29 @@ class userView(View):
 
 
 class newsArticleView(View):
+    """
+    View class for handling news article requests.
+
+    Methods:
+    - get: Retrieve news articles searched keywords by user id.
+    - post: Create or retrieve news articles based on the user's query.
+    """
+
     def get(self, request):
+        """
+        Handle GET requests to retrieve news articles searched keywords by user id.
+
+        Args:
+        - request: The logged in user HTTP request object.
+
+        Returns:
+        - API response with serialized news article searched keywords with following dictionary keys:
+            - id
+            - search_str
+            - total_results
+            - count
+            - created_at
+        """
         try:
             news_data = searchHistory.objects.filter(user_id=request.user.id).order_by('-created_at')
             serialized_data = []
@@ -190,6 +312,27 @@ class newsArticleView(View):
 
 
     def post(self, request):
+        """
+        Handle POST requests to create or retrieve news articles based on the user's query.
+
+        Args:
+        - request: The HTTP request object.
+        - query: Query string to search news.
+        - fetch_latest: Boolean value to detect it latest news needs to be searched.
+        - filters: Filters retrieve news accordingly. Following filters includes
+            - source
+            - category
+            - language
+            - publishedAt
+
+        Returns:
+        - API response with news article data. With following dictionary keys:
+            - title
+            - author
+            - description
+            - url
+            - publishedAt
+        """
         try:
             body = json.loads(request.body)
             q = body.get('query').strip()
@@ -273,6 +416,21 @@ class newsArticleView(View):
 
 class newsArticleDetailsView(View):
     def get(self, request, id):
+        """
+        Handle GET requests to retrieve news article by search keyword.
+
+        Args:
+        - request: The logged in user HTTP request object and search id
+
+        Returns:
+        - API response with serialized news article with following dictionary keys:
+            - id
+            - author
+            - title
+            - description
+            - url
+            - publishedAt
+        """
         try:
             news_data = newsArticle.objects.filter(search_id=id).order_by('-publishedAt')
             serialized_data = []
@@ -294,6 +452,17 @@ class newsArticleDetailsView(View):
 
 class userTrendingKeywordsView(View):
     def get(self, request):
+        """
+        Handle GET requests to retrieve trending searched keywords by user.
+
+        Args:
+        - request: The logged in user HTTP request object.
+
+        Returns:
+        - API response with serialized news article searched keywords with following dictionary keys:
+            - keyword
+            - count
+        """
         trending_searches = searchHistory.objects.values('search_str', 'count').order_by('-count')
 
         data_dict = {}

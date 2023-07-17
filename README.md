@@ -33,7 +33,7 @@ Add the .env file in news_article and add below variables:
 - NEWS_API_KEY=''
 - KEYWORD_THRESHOLD=900
 
-KEYWORD_THRESHOLD is to prevent user to search same keyword multiple times
+KEYWORD_THRESHOLD is to prevent user to search same keyword multiple times and email setup to send password to user when adding.
 
 Run the following command
 ```sh
@@ -49,3 +49,21 @@ Run the following command
 Navigate to `http://127.0.0.1:8000/news_article/`.
 Now login with superuser credentials. It will got to the admin page becasue of admin creds.
 Add a user from admin panel and login on http://127.0.0.1:8000/news_article/ to search news.
+
+
+### Development Time
+
+The breakdown of time spent on different project tasks is as follows:
+
+- Requirement analysis: [4 hours]
+- UI development: [1 day]
+- Development and implementation: [1 day]
+- Testing and bug fixing: [2 hours]
+- Documentation and finalization: [2 hours]
+
+### Overall Experience
+
+Working on this project has been a fulfilling and rewarding experience. The project provided an opportunity to apply and enhance our skills in Django development.
+I was facing some following challanges:
+- How to get latest news article by date becasue if already have some article for that date then articles again will come same.
+- Manage filters was very difficult becasue in given apis all filter data was not include in response data so it was hard handler at local
