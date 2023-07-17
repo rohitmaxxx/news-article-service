@@ -19,7 +19,7 @@ $ source env/bin/activate
 Then install the dependencies:
 
 ```sh
-(env)$ pip install -r requirements.txt
+(env)$ pip install -r requirement.txt
 ```
 Note the `(env)` in front of the prompt. This indicates that this terminal
 session operates in a virtual environment.
