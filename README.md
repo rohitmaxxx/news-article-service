@@ -53,7 +53,7 @@ Add a user from admin panel and login on http://127.0.0.1:8000/news_article/ to 
 
 ### Development Time
 
-The breakdown of time spent on different project tasks is as follows:
+The breakdown of time spent on project is as follows:
 
 - Requirement analysis: [4 hours]
 - UI development: [1 day]
