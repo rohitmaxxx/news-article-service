@@ -88,6 +88,7 @@
   <!-- <script src="script.js"></script> -->
   <script>
     function loadData(first_time_fetch=false, fetch_latest=false) {
+      const queryParams = new URLSearchParams(window.location.search);
       let filters = getFilters();
       if (!(fetch_latest || first_time_fetch)) 
         event.preventDefault(); // Prevent default form submission
@@ -98,6 +99,7 @@
       // Get form data
       var formData = {
         query: $("#search-input").val(),
+        search_id: queryParams.get('search_id') || '',
         fetch_latest: fetch_latest,
         filters: filters,
       };
@@ -121,6 +123,7 @@
             } 
             else {
               let article_data = response.data.articles;
+              $("#search-input").val(response.data.query);
               $('#news_table_body').html(prepareArticleTableHtml(article_data));
               $('#search-results').show();
             }

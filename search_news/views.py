@@ -335,8 +335,9 @@ class newsArticleView(View):
         """
         try:
             body = json.loads(request.body)
-            q = body.get('query').strip()
-            fetch_latest = body.get('fetch_latest')
+            q = body.get('query', '').strip()
+            search_id = body.get('search_id', '').strip()
+            fetch_latest = body.get('fetch_latest', False)
             filters = prepareFilter(body.get('filters'))
             user_id = request.user.id
             first_time_load = False
@@ -347,7 +348,10 @@ class newsArticleView(View):
             if q:
                 result_search_history = searchHistory.objects.filter(user_id=user_id, search_str=q).first()
             else:
-                result_search_history = searchHistory.objects.filter(user_id=user_id).order_by('-updated_at').first()
+                if search_id:
+                    result_search_history = searchHistory.objects.filter(user_id=user_id, id=search_id).order_by('-updated_at').first()
+                else:
+                    result_search_history = searchHistory.objects.filter(user_id=user_id).order_by('-updated_at').first()
                 if not result_search_history:
                     return apiResponse(None, msg="Please enter a valid search input")
                 first_time_load = True

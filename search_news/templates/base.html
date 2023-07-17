@@ -107,7 +107,7 @@ function prepareHistoryTableHtml(article_data) {
         <tr>
             <th scope="row">${idx+1}</th>
             <td>${val.search_str}</td>
-            <td><a href="/news_article/history/articles?search_id=${val.id}" target="_blank">Open article</a></td>
+            <td><a href="/news_article/?search_id=${val.id}" target="_blank">Show</a></td>
             <td>${val.count}</td>
             <td>${val.total_results}</td>
             <td>${convertDateTime(val.created_at)}</td>
