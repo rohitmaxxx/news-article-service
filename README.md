@@ -55,11 +55,11 @@ Add a user from admin panel and login on http://127.0.0.1:8000/news_article/ to 
 
 The breakdown of time spent on project is as follows:
 
-- Requirement analysis: [4 hours]
-- UI development: [1 day]
-- Development and implementation: [1 day]
-- Testing and bug fixing: [2 hours]
-- Documentation and finalization: [2 hours]
+- Requirement analysis: [2 days]
+- UI development: [3 day]
+- Development and implementation: [10 days]
+- Testing and bug fixing: [3 days]
+- Documentation and finalization: [2 days]
 
 ### Overall Experience
 
