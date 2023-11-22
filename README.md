@@ -5,7 +5,7 @@
 The first thing to do is to clone the repository:
 
 ```sh
-$ https://github.com/rohitmaxxx/news_article.git
+$ git clone https://github.com/rohitmaxxx/news_article.git
 $ cd sample-django-app
 ```
 
